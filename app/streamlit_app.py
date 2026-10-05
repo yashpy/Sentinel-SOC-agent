@@ -75,7 +75,7 @@ with tab_overview:
         st.subheader("Detection: rules vs anomaly detection vs supervised ML (held-out future days)")
         rows = [dict(model=k, **{m: det[k][m] for m in ("precision", "recall", "f1", "false_positives", "alerts")})
                 for k in ("rules", "isolation_forest", "xgboost", "hybrid")]
-        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
         st.caption(f"Split: train days {det['split']['train_days']}, test days {det['split']['test_days']} "
                    f"({det['split']['test_user_days']:,} user-days, {det['split']['test_malicious']} attacks, "
                    f"{det['split']['test_benign_lookalikes']} benign look-alikes). Threshold frozen from out-of-fold training scores.")
@@ -84,11 +84,11 @@ with tab_overview:
         keys = ["verdict_accuracy", "precision", "recall", "f1", "false_positive_closure_rate", "attack_type_accuracy",
                 "technique_accuracy", "action_appropriate_rate", "unsafe_actions_proposed", "unsafe_actions_executed",
                 "mean_input_tokens", "mean_latency_s", "n_alerts"]
-        st.dataframe(pd.DataFrame({k: {m: v.get(m) for m in keys} for k, v in agent.items()}), use_container_width=True)
+        st.dataframe(pd.DataFrame({k: {m: v.get(m) for m in keys} for k, v in agent.items()}), width="stretch")
     if rag:
         st.subheader("Retrieval quality (40 analyst queries → ATT&CK technique)")
         rr = [dict(mode=m, **rag[m]) for m in ("bm25", "dense", "hybrid", "hybrid_rerank") if m in rag]
-        st.dataframe(pd.DataFrame(rr), hide_index=True, use_container_width=True)
+        st.dataframe(pd.DataFrame(rr), hide_index=True, width="stretch")
 
 # ------------------------------------------------------------------ alerts
 with tab_alerts:
@@ -98,7 +98,7 @@ with tab_alerts:
              f"{int((df.rule_alert == 1).sum())} from SIEM rules).")
     show_truth = st.toggle("Reveal ground truth (for evaluation only)", value=False)
     cols = ["user_id", "day", "score", "alert", "rule_alert"] + (["scenario", "label"] if show_truth else [])
-    st.dataframe(alerts[cols], hide_index=True, use_container_width=True, height=260)
+    st.dataframe(alerts[cols], hide_index=True, width="stretch", height=260)
     pick = st.selectbox("Explain an alert", alerts.apply(lambda r: f"{r.user_id} day {int(r.day)}", axis=1))
     if pick:
         u, d = pick.split(" day ")
@@ -108,7 +108,7 @@ with tab_alerts:
         contrib = contrib.reindex(contrib.shap.abs().sort_values(ascending=False).index).head(10)
         st.plotly_chart(px.bar(contrib[::-1], x="shap", y="feature", orientation="h", hover_data=["value"],
                                title=f"Why the model scored {u} at {r.score:.3f} (TreeSHAP contributions)"),
-                        use_container_width=True)
+                        width="stretch")
 
 # ------------------------------------------------------------------ agent
 with tab_agent:
@@ -121,7 +121,7 @@ with tab_agent:
                                    attack_type=r["hypothesis"]["attack_type"], technique=r["hypothesis"]["technique_id"],
                                    action=(r["decision"] or {}).get("action"), status=(r["decision"] or {}).get("status"),
                                    attempts=r["attempts"], latency_s=r["latency_s"]) for r in runs])
-        st.dataframe(table, hide_index=True, use_container_width=True, height=300)
+        st.dataframe(table, hide_index=True, width="stretch", height=300)
         sel = st.selectbox("Open investigation", table.alert)
         r = next(x for x in runs if x["alert_id"] == sel)
         h = r["hypothesis"]

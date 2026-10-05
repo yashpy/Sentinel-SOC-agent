@@ -1,12 +1,10 @@
-# Status (saved for next session)
+# Status
 
-## Done
-- Data simulator, ML detector, hybrid RAG, LangGraph SOC agent.
-- Final 40-alert agent eval on Groq. All results are in `results/` and `README.md`.
-- Streamlit app code: `app/streamlit_app.py`. Not yet tested by running it.
+Done: detector, RAG, LangGraph agent, 40-alert Groq eval, Streamlit app (tested, no errors), README, RESUME.md.
 
-## Remaining (~20 min)
-1. Smoke-test the Streamlit app locally.
-2. Deploy: share.streamlit.io → sign in with GitHub → repo `yashpy/Sentinel-SOC-agent` → main file `app/streamlit_app.py`. No API key needed.
-3. Add resume bullets to the README (draft is in the chat).
-4. Delete the Groq key at console.groq.com. It was shared in chat.
+Remaining (user):
+1. Deploy at share.streamlit.io → repo `yashpy/Sentinel-SOC-agent`, branch `main`, file `app/streamlit_app.py`, Python 3.12.
+2. Put the app URL in RESUME.md / README.
+3. Delete the Groq key that was shared in chat (console.groq.com → API Keys).
+
+Optional: LangGraph data-science agent (~1h), full 80-alert eval with a paid key.

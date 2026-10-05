@@ -46,7 +46,18 @@ def _clean(s: str) -> str:
 ATTACK_URL = "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json"
 
 
+SNAPSHOT_PATH = config.ARTIFACTS_DIR / "attack_techniques.json"  # compact, committed snapshot
+
+
 def load_attack_docs() -> list[Doc]:
+    if SNAPSHOT_PATH.exists():
+        return [Doc(**d) for d in json.loads(SNAPSHOT_PATH.read_text())]
+    docs = _parse_stix()
+    SNAPSHOT_PATH.write_text(json.dumps([d.__dict__ for d in docs]))
+    return docs
+
+
+def _parse_stix() -> list[Doc]:
     if not config.ATTACK_STIX_PATH.exists():  # not committed (46 MB); fetched on first use
         import urllib.request
 
