@@ -1,0 +1,29 @@
+{
+  "agent_full": {
+    "n_alerts": 16,
+    "n_malicious": 9,
+    "n_benign": 7,
+    "verdict_accuracy": 0.5625,
+    "precision": 0.5625,
+    "recall": 1.0,
+    "f1": 0.72,
+    "false_positive_closure_rate": 0.0,
+    "fused_precision": 1.0,
+    "fused_recall": 0.7778,
+    "fused_f1": 0.875,
+    "alerts_closed_or_auto_handled": 0.3125,
+    "attack_type_accuracy": 0.8889,
+    "technique_accuracy": 0.8889,
+    "action_appropriate_rate": 0.5,
+    "unsafe_actions_proposed": 7,
+    "unsafe_actions_executed": 0,
+    "json_valid_rate": 0.875,
+    "verifier_retry_rate": 0.25,
+    "errors": 0,
+    "mean_latency_s": 102.76,
+    "p95_latency_s": 169.64,
+    "mean_llm_calls": 2.25,
+    "mean_input_tokens": 2598.4,
+    "mean_output_tokens": 406.9
+  }
+}

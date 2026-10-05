@@ -1,0 +1,15 @@
+langgraph>=1.2
+langgraph-checkpoint-sqlite
+langchain>=1.4
+langchain-core
+langchain-groq
+langchain-ollama
+xgboost>=3.0
+scikit-learn>=1.5
+pandas>=2.2
+pyarrow
+numpy
+rank-bm25
+fastembed
+streamlit
+plotly

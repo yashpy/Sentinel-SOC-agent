@@ -1,0 +1,109 @@
+{
+  "split": {
+    "train_days": "7-29",
+    "test_days": "30-43",
+    "train_user_days": 6522,
+    "test_user_days": 3846,
+    "train_malicious": 93,
+    "test_malicious": 51,
+    "test_benign_lookalikes": 50
+  },
+  "threshold": 0.84351,
+  "target_recall": 0.9,
+  "rules": {
+    "precision": 0.6364,
+    "recall": 0.9608,
+    "f1": 0.7656,
+    "alerts": 77,
+    "alerts_per_day": 5.1,
+    "false_positives": 28,
+    "lookalike_fp_rate": 0.52,
+    "normal_fp_rate": 0.00053
+  },
+  "isolation_forest": {
+    "precision": 0.1935,
+    "recall": 0.9412,
+    "f1": 0.3211,
+    "alerts": 248,
+    "alerts_per_day": 16.5,
+    "false_positives": 200,
+    "lookalike_fp_rate": 0.78,
+    "normal_fp_rate": 0.04299,
+    "pr_auc": 0.7537,
+    "roc_auc": 0.9885
+  },
+  "xgboost": {
+    "precision": 0.9787,
+    "recall": 0.902,
+    "f1": 0.9388,
+    "alerts": 47,
+    "alerts_per_day": 3.1,
+    "false_positives": 1,
+    "lookalike_fp_rate": 0.02,
+    "normal_fp_rate": 0.0,
+    "pr_auc": 0.9908,
+    "roc_auc": 0.9999
+  },
+  "hybrid": {
+    "precision": 0.98,
+    "recall": 0.9608,
+    "f1": 0.9703,
+    "alerts": 50,
+    "alerts_per_day": 3.3,
+    "false_positives": 1,
+    "lookalike_fp_rate": 0.02,
+    "normal_fp_rate": 0.0
+  },
+  "xgboost_recall_by_scenario": {
+    "account_takeover": 1.0,
+    "auth_policy_tamper": 0.571,
+    "brute_force": 1.0,
+    "insider_exfiltration": 0.75,
+    "mfa_fatigue": 1.0,
+    "privilege_escalation": 1.0,
+    "session_hijack": 1.0,
+    "token_abuse": 0.889
+  },
+  "hybrid_recall_by_scenario": {
+    "account_takeover": 1.0,
+    "auth_policy_tamper": 1.0,
+    "brute_force": 1.0,
+    "insider_exfiltration": 0.75,
+    "mfa_fatigue": 1.0,
+    "privilege_escalation": 1.0,
+    "session_hijack": 1.0,
+    "token_abuse": 0.889
+  },
+  "rules_recall_by_scenario": {
+    "account_takeover": 0.6,
+    "auth_policy_tamper": 1.0,
+    "brute_force": 1.0,
+    "insider_exfiltration": 1.0,
+    "mfa_fatigue": 1.0,
+    "privilege_escalation": 1.0,
+    "session_hijack": 1.0,
+    "token_abuse": 1.0
+  },
+  "top_features_gain": {
+    "n_new_ips": 876.79,
+    "n_policy_changes": 487.04,
+    "n_highrisk_grants": 367.61,
+    "nonadmin_grant": 178.2,
+    "max_export_ratio": 154.12,
+    "n_login_ok": 115.62,
+    "export_records_log": 100.72,
+    "n_ips": 88.57,
+    "max_fails_one_ip": 66.85,
+    "api_hosting": 48.8,
+    "frac_offhours": 44.14,
+    "n_risky_policy": 31.74,
+    "n_exports": 29.89,
+    "access_ratio": 27.33,
+    "n_events": 23.71
+  },
+  "headline": {
+    "alert_reduction_vs_rules": 0.3506,
+    "fp_reduction_vs_rules": 0.9643,
+    "precision_gain_vs_rules": 0.3436
+  }
+}
