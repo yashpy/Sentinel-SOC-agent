@@ -139,8 +139,16 @@ def score(rec: dict) -> dict:
     return s
 
 
-def summarize(runs: list[dict] | None = None) -> dict:
+def summarize(runs: list[dict] | None = None, matched: bool = True) -> dict:
+    """Errored runs (e.g. API rate limits) are excluded, not scored as wrong. With matched=True every
+    config is scored on the same alerts: those that completed successfully under all configs."""
     runs = runs or load_runs()
+    errors = {c: sum(1 for r in runs if r["config"] == c and r.get("error")) for c in CONFIGS}
+    runs = [r for r in runs if not r.get("error")]
+    present = [c for c in CONFIGS if any(r["config"] == c for r in runs)]
+    if matched and present:
+        common = set.intersection(*({r["alert_id"] for r in runs if r["config"] == c} for c in present))
+        runs = [r for r in runs if r["alert_id"] in common]
     out = {}
     for cfg in CONFIGS:
         rs = [r for r in runs if r["config"] == cfg]
@@ -172,7 +180,7 @@ def summarize(runs: list[dict] | None = None) -> dict:
             unsafe_actions_executed=int(sum(s["unsafe_executed"] for s in sc)),
             json_valid_rate=round(np.mean([r["json_ok"] for r in rs]), 4),
             verifier_retry_rate=round(first_bad / len(rs), 4),
-            errors=sum(1 for r in rs if r.get("error")),
+            excluded_errored_runs=errors[cfg],
             mean_latency_s=round(np.mean([r["latency_s"] for r in rs]), 2),
             p95_latency_s=round(float(np.percentile([r["latency_s"] for r in rs], 95)), 2),
             mean_llm_calls=round(np.mean([r["llm_calls"] for r in rs]), 2),
