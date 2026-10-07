@@ -1,0 +1,8 @@
+% Sentinel SOC — drop-in replacement for a Projects entry.
+% All numbers are measured on 78–80 held-out alerts (matched comparison, same model gpt-oss-120b).
+\textbf{Sentinel -- Autonomous SOC Agent (Agentic AI)} \hfill Sept 2026 -- Present
+\begin{itemize}[leftmargin=*,itemsep=-2pt,topsep=0pt,parsep=0pt,partopsep=0pt]
+\item Built an autonomous security-operations agent with \textbf{LangGraph} (parallel investigators, self-correcting verifier, human-in-the-loop approval, checkpointing) and hybrid \textbf{RAG} over \textbf{697 MITRE ATT\&CK} techniques; on \textbf{80 held-out alerts} it reached \textbf{79\% verdict accuracy} (vs. 68\% for a single-shot LLM) and \textbf{100\% precision} when fused with the ML detector, with \textbf{0 unsafe actions} on benign users (vs. 23).
+\item Ran ablations showing tool-based context engineering drove accuracy using \textbf{25\% fewer tokens}, while RAG + verifier doubled ATT\&CK technique mapping (\textbf{29\%$\rightarrow$61\%}).
+\item Trained an \textbf{XGBoost} threat detector (34 leakage-free, time-split features; \textbf{SHAP} explanations): \textbf{98\% precision / 96\% recall}, cutting false positives \textbf{96\%} vs. a SIEM-rules baseline. Deployed a \textbf{Streamlit} demo. [Python, LangGraph, RAG, XGBoost]
+\end{itemize}
