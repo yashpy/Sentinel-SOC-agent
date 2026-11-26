@@ -6,7 +6,7 @@ All numbers below are **measured on held-out data**. The scripts to reproduce th
 
 ## Architecture
 ```
- audit logs ─► feature store (each user-day vs that user's own past, no leakage)
+ audit logs ─► feature store (34 per-user behavioral features: each user-day vs that user's own past, no leakage)
             ─► XGBoost + critical rules ─► alert (+ TreeSHAP signals)
                                                   │
  LangGraph ┌─────────────────────────────────────▼───────────────────────┐
@@ -21,7 +21,7 @@ All numbers below are **measured on held-out data**. The scripts to reproduce th
 
 ## Results
 
-**1. ML threat detection.** Data: 202k simulated audit events, 400 users, 289 labeled incidents (8 attack types plus 7 benign look-alikes). Time-based split, tested on days 30–43: 3,846 user-days, 51 attacks, 50 benign look-alikes. The alert threshold was frozen using out-of-fold training scores.
+**1. ML threat detection.** Data: 202k simulated audit events, 400 users, 289 labeled incidents (8 attack types plus 7 benign look-alikes). Detector input: 34 per-user behavioral features (see `artifacts/detector_meta.json`). Time-based split, tested on days 30–43: 3,846 user-days, 51 attacks, 50 benign look-alikes. The alert threshold was frozen using out-of-fold training scores.
 
 | Model | Precision | Recall | False positives | Alerts |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ That's 96% fewer false positives and 35% fewer alerts than the rules baseline at
 
 The reranker made results worse on this domain, so it's off by default.
 
-**3. Agent evaluation and ablation.** All three setups use the same model (gpt-oss-120b on Groq) and are scored on the **same 78 held-out alerts** (49 attacks, 29 benign look-alikes):
+**3. Agent evaluation and ablation.** All three setups use the same model (gpt-oss-120b on Groq) and are scored on the **same 78 held-out alerts** (49 attacks, 29 benign look-alikes; 80 alerts were run, 2 raw-log runs errored on rate limits and are excluded from all setups):
 
 | Metric | Raw-log LLM | Agent: tools only | Agent: tools + RAG + verifier |
 |---|---|---|---|
